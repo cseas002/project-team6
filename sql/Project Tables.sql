@@ -1,0 +1,143 @@
+CREATE TABLE [dbo].USERS
+(
+  UserID INT IDENTITY (1,1) NOT NULL,
+  FName NVARCHAR(30) NOT NULL CHECK (FName != ''),
+  LName NVARCHAR(30) NOT NULL CHECK (Lname != ''),
+  GovID INT NOT NULL,
+  Date_of_Birth DATE NOT NULL,
+  Gender CHAR(1) NOT NULL, -- M,F,O
+  Username NVARCHAR(30)  NOT NULL CHECK (Username != ''),
+  UPassword NVARCHAR(MAX) NOT NULL CHECK (UPassword != ''),
+  UserType TINYINT NOT NULL, -- Root (1), Database Admin (2), Simple User(3)
+  CONSTRAINT USERS_UQ_Username UNIQUE (Username),
+  CONSTRAINT USERS_UQ_GovID UNIQUE (GovID),
+  CONSTRAINT USERS_PK  PRIMARY KEY (UserID), 
+  CONSTRAINT UserType_Type CHECK(UserType IN (1, 2, 3)),
+  CONSTRAINT Gender_MFO CHECK(Gender IN ('M', 'F', 'O'))
+  -- Check for usertype
+);
+
+CREATE TABLE [dbo].TYPES
+(
+  TypeID INT IDENTITY(1,1) NOT NULL,
+  Title NVARCHAR(40) NOT NULL CHECK (Title != ''),
+  Model NVARCHAR(30) NOT NULL CHECK (Model != ''),
+  UserAdded INT,
+  UserModified INT,
+  Date_Added DATE DEFAULT GETDATE(),
+  Date_Modified DATE,
+  CONSTRAINT TYPES_PK PRIMARY KEY (TypeID),
+  CONSTRAINT TYPES_UQ_Title_Model Unique (Title,Model)
+);
+
+CREATE TABLE [dbo].CAMPUS
+(
+  CampusID INT IDENTITY(1,1) NOT NULL,
+  CampusName NVARCHAR(30) NOT NULL CHECK (CampusName != ''),
+  Summary NVARCHAR(MAX) NOT NULL CHECK (Summary != ''),
+  RegDate DATE NOT NULL,
+  UserAdded INT,
+  UserModified INT,
+  Date_Added DATE DEFAULT GETDATE(),
+  Date_Modified DATE,
+  Website NVARCHAR(2083) NOT NULL CHECK (Website != ''), -- Maximum URL length
+  CONSTRAINT CAMPUS_PK PRIMARY KEY (CampusID),
+  CONSTRAINT CAMPUS_UQ_CampusName UNIQUE (CampusName)
+);
+
+CREATE TABLE [dbo].BUILDING
+(
+  BCode INT IDENTITY(1,1) NOT NULL,
+  BLDCode NVARCHAR(50) NOT NULL,
+  BName NVARCHAR(50) NOT NULL,
+  Summary NVARCHAR(MAX) NOT NULL,
+  BAddress NVARCHAR(200) NOT NULL,
+  x DECIMAL(15, 12) NOT NULL, 
+  y DECIMAL(15, 12) NOT NULL,
+  BOwner NVARCHAR(30),
+  RegDate DATE NOT NULL,
+  UserAdded INT,
+  UserModified INT,
+  Date_Added DATE DEFAULT GETDATE(),
+  Date_Modified DATE,
+  CampusID INT, -- This is the foreign key, which might be null 
+  CONSTRAINT BUILDING_PK PRIMARY KEY (BCode),
+  CONSTRAINT BUILDING_U_BLDCode UNIQUE (BLDCode),
+  CONSTRAINT BUILDING_FK_CampusID FOREIGN KEY (CampusID) REFERENCES [dbo].CAMPUS(CampusID) ON UPDATE CASCADE ON DELETE SET NULL
+);
+
+CREATE TABLE [dbo].BFLOOR
+(
+  FloorID INT NOT NULL IDENTITY(1,1),
+  Summary NVARCHAR(MAX) NOT NULL CHECK (Summary != ''),
+  TopoPlan VARCHAR(MAX) NOT NULL CHECK (TopoPlan != ''),
+  FloorZ INT NOT NULL,
+  BCode INT NOT NULL,
+  UserAdded INT,
+  UserModified INT,
+  Date_Added DATE DEFAULT GETDATE(),
+  Date_Modified DATE,
+  CONSTRAINT FLOOR_PK UNIQUE (FloorID),
+  CONSTRAINT FLOOR_U_BCode_FloorZ UNIQUE (FloorZ, BCode),
+  CONSTRAINT FLOOR_FK_BCode FOREIGN KEY (BCode) REFERENCES [dbo].BUILDING(BCode) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE [dbo].POI
+(
+  POIID INT IDENTITY(1, 1) NOT NULL,
+  POIName NVARCHAR(40) NOT NULL CHECK (POIName != ''),
+  Summary NVARCHAR(MAX) NOT NULL CHECK (Summary != ''),
+  x DECIMAL(15, 12) NOT NULL,
+  y DECIMAL(15, 12) NOT NULL,
+  FloorID INT NOT NULL,
+  POIOwner NVARCHAR(30) CHECK (POIOwner != ''), -- Owner could be null
+  POIType NVARCHAR(30) NOT NULL CHECK (POIType != ''),
+  UserAdded INT,
+  UserModified INT,
+  Date_Added DATE DEFAULT GETDATE(),
+  Date_Modified DATE,
+  CONSTRAINT POI_PK PRIMARY KEY (POIID),
+  CONSTRAINT POI_FK_FloorID FOREIGN KEY (FloorID) REFERENCES [dbo].BFLOOR(FloorID) ON UPDATE CASCADE
+);
+
+CREATE TABLE [dbo].FINGERPRINT
+(
+  FingerprintID INT IDENTITY(1, 1) NOT NULL,
+  Date_Added DATE DEFAULT GETDATE(),
+  Date_Modified DATE,
+  x DECIMAL(15, 12) NOT NULL,
+  y DECIMAL(15, 12) NOT NULL,
+  FloorID INT,
+  Level INT,
+  RegDate SMALLDATETIME NOT NULL,
+  UserAdded INT,  -- NULL at first and then inserted by trigger
+  UserModified INT,
+  CONSTRAINT FINGERPRINT_PK PRIMARY KEY (FingerprintID),
+  CONSTRAINT FINGERPRINT_FK_FloorID FOREIGN KEY (FloorID) REFERENCES [dbo].BFLOOR(FloorID) ON UPDATE CASCADE
+);
+
+CREATE TABLE [dbo].ITEM
+(
+  Height INT NOT NULL,
+  Width INT NOT NULL,
+  ItemID INT IDENTITY(1,1) NOT NULL,
+  TypeID int NOT NULL,
+  FingerprintID INT NOT NULL,
+  UserAdded INT,
+  UserModified INT, 
+  Date_Added DATE DEFAULT GETDATE(),
+  Date_Modified DATE,
+  CONSTRAINT ITEM_PK PRIMARY KEY (ItemID),
+  CONSTRAINT ITEM_FK_TypeID FOREIGN KEY (TypeID) REFERENCES [dbo].TYPES(TypeID) ON UPDATE CASCADE,
+  CONSTRAINT ITEM_FK_TypeInFingerprint FOREIGN KEY (FingerprintID) REFERENCES [dbo].FINGERPRINT(FingerprintID) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE dbo.UserID (
+UserID	INT NOT NULL
+CONSTRAINT PK_UserID PRIMARY KEY (UserID)
+)
+
+CREATE NONCLUSTERED INDEX FINGERPRINT_ON_ITEM ON dbo.ITEM (FingerprintID);  -- For Q12
+GO
+-- TEST USER gchora01 1234
+
