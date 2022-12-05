@@ -1,0 +1,285 @@
+body{   
+    background: #eee;  
+    font-family: Arial, Helvetica, sans-serif;
+    background-image: url("./images/UCY_lib.jpg");
+    background-repeat: no-repeat; 
+    background-attachment: fixed;
+    background-size: cover;
+    background-blend-mode: overlay;
+}
+
+.login-background{   
+  font-family: Arial, Helvetica, sans-serif;
+  background-image: url("./images/UCY_lib.jpg");
+  background-repeat: no-repeat; 
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+.loadingImg{
+  loadingImg
+}
+
+.frm{  
+    /* text-align: center; */
+    border: solid gray 1px; 
+    width:25%;  
+    border-radius: 5rem;  
+    margin: auto;  
+    background: #eee; 
+    background-image: url("./images/TEPAK.png"); 
+    background-repeat: no-repeat; 
+    background-attachment: fixed;
+    background-size: cover;
+    background-blend-mode: overlay; 
+    padding: 50px;  
+}  
+
+.btn{  
+    color: #fff;  
+    background: #8d9106;  
+    padding: 7px;  
+    cursor: pointer;
+}  
+.btnUpForm{  
+    display:inline-block;
+    color: #fff;  
+    background: #8d9106;  
+    padding: 7px;  
+    cursor: pointer;
+    width: 100px;
+    border-radius: 2rem;
+    margin-left: 20px;
+    height: 60px;
+    /* margin-bottom: 4rem; */
+} 
+
+.addRowBtn{
+  display:inline-block;
+  color: #fff; 
+  /* margin-bottom: -4rem; */
+  width: 60px; 
+  height: 60px;
+  left: 2rem;     
+  /* font-size: 2rem;     */
+  background-color: #8d9106;   
+  padding: 7px;  
+  border-radius: 4rem; 
+  /* z-index: 999999999999999;  */
+  cursor: pointer; 
+}
+
+.disconnectForm { 
+    height: 100px; 
+    position: fixed; 
+    bottom:0%;
+    width:170px; 
+    background-color: #8d9106; 
+    opacity: 1;
+}
+.disconnectBtn{
+    background-color: #C68F06;
+    margin-left: 20px;
+    width: 120px;
+    appearance: button;
+    background-image: linear-gradient(180deg, rgba(255, 255, 255, .15), rgba(255, 255, 255, 0));
+    border: 1px solid #ae7f08;
+    border-radius: 1rem;
+    box-shadow: rgba(255, 255, 255, 0.15) 0 1px 0 inset,rgba(46, 54, 80, 0.075) 0 1px 1px;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+.sidenav {
+    width: 170px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgb(210, 210, 210);
+    overflow-x: hidden;
+    padding-bottom: 100px;
+    padding-top: 20px;
+}
+.sidenav a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    color: #2f2f2f;
+    display: block;
+}
+.sidenav a:hover {
+    color: #525252;
+}
+.main {
+    margin-left: 170px;
+    /* Same as the width of the sidenav */
+    padding: 0px 10px;
+}
+@media screen and (max-height: 450px) {
+    .sidenav {
+        padding-top: 12px;
+    }
+    .sidenav a {
+        font-size: 14px;
+    }
+}
+.textbtn {
+    border: none;
+    background-color: inherit;
+    padding: 12px 24px;
+    font-size: 16px;
+    cursor: pointer;
+    display: inline-block;
+  }
+  
+  /* On mouse-over */
+  .textbtn:hover {background: #eee;}
+  
+  .success {color: green;}
+  .info {color: dodgerblue;}
+  .warning {color: orange;}
+  .warningb {background: orange;}
+  .danger {color: red;}
+  .default {color: black;}
+  .blue {color: blue;}
+  .ucygreen {color: #8d9106;}
+
+  .tablePaddedRows td{
+    padding-top: 5px;
+    height: 30px;
+  }
+
+  .tablePaddedRows input, select{
+    height: 100%;
+  }
+
+
+/* The popup form - hidden by default */
+.form-popup {
+    display: none;
+    position: fixed;
+    position: fixed;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+    border: 3px solid #f1f1f1;
+    z-index: 9;
+    background-color: white;
+  }
+  
+  /* Add styles to the form container */
+  .form-container {
+    max-width: 500px;
+    padding: 5%;
+    background-color: white;
+  }
+  
+  /* Full-width input fields */
+  .form-container input[type=text], .form-container input[type=password], .form-container input[type=date], .form-container input[type=datetime-local], .form-container select {
+    width: 50%;
+    padding: 10px;
+    margin: 5px 0 12px 0;
+    border: none;
+    background: #dcdcdc;
+  }
+
+  .form-container label{
+    display: inline-block;
+    width: 48%;
+  }
+  
+  /* When the inputs get focus, do something */
+  .form-container input[type=text]:focus, .form-container input[type=password]:focus, .form-container input[type=date]:focus, .form-container input[type=datetime-local]:focus {
+    background-color: #ddd;
+    outline: none;
+  }
+  
+  /* Set a style for the submit/login button */
+  .form-container .btn {
+    background-color: #04AA6D;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom:10px;
+    opacity: 0.8;
+  }
+  
+  /* Add a red background color to the cancel button */
+  .form-container .cancel {
+    background-color: red;
+  }
+  
+  /* Add some hover effects to buttons */
+  .form-container .btn:hover, .open-button:hover {
+    opacity: 1;
+  }
+  
+
+
+  /* Menu buttons */
+.button-20 {
+  appearance: button;
+  background-color: #8d9106;
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, .15), rgba(255, 255, 255, 0));
+  border: 1px solid #858906;
+  border-radius: 1rem;
+  box-shadow: rgba(255, 255, 255, 0.15) 0 1px 0 inset,rgba(46, 54, 80, 0.075) 0 1px 1px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Inter,sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5;
+  margin: 10;
+  padding: .5rem 1rem;
+  height:50px;
+  /* width:100px; */
+  text-align: center;
+  text-transform: none;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  user-select: none;
+  -webkit-user-select: none; 
+  touch-action: manipulation;
+  vertical-align: middle;
+}
+
+.button-20:focus:not(:focus-visible),
+.button-20:focus {
+  outline: 0;
+}
+
+.button-20:hover {
+  background-color: #787b07;
+  border-color: #8d9106;
+}
+
+.button-20:focus {
+  background-color: #8d9106;
+  border-color: #7e8305;
+  box-shadow: rgba(255, 255, 255, 0.15) 0 1px 0 inset, rgba(46, 54, 80, 0.075) 0 1px 1px, rgba(104, 101, 235, 0.5) 0 0 0 .2rem;
+}
+
+.button-20:active {
+  background-color: #858906;
+  background-image: none;
+  border-color: #9ca108;
+  box-shadow: rgba(46, 54, 80, 0.125) 0 3px 5px inset;
+}
+
+.button-20:active:focus {
+  box-shadow: rgba(46, 54, 80, 0.125) 0 3px 5px inset, rgba(112, 154, 34, 0.5) 0 0 0 .2rem;
+}
+
+.button-20:disabled {
+  background-image: none;
+  box-shadow: none;
+  opacity: .65;
+  pointer-events: none;
+}
